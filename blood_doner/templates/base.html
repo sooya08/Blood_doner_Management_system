@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{% block title %}Blood Donor System{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+{% if session.user_id %}
+<div class="layout">
+  <nav>
+    <b>Blood Donor System</b>
+    <a href="{{ url_for('dashboard') }}">Dashboard</a>
+    {% if session.is_admin %}
+    <a href="{{ url_for('admin_donors') }}">Donor approvals</a>
+    {% endif %}
+    <a href="{{ url_for('register_donor') }}">Register donor</a>
+    <a href="{{ url_for('donor_search') }}">Find donors</a>
+    <a href="{{ url_for('schedule_donation') }}">Schedule donation</a>
+    <a href="{{ url_for('donation_records') }}">Donation records</a>
+    <a href="{{ url_for('blood_stock') }}">Blood stock</a>
+    <a href="{{ url_for('post_donation_followup') }}">Follow-ups</a>
+    <a href="{{ url_for('rejected_donors') }}">Rejected donors</a>
+    <a href="{{ url_for('compatibility') }}">Compatibility</a>
+    {% if session.is_admin %}
+    <a href="{{ url_for('reports') }}">Reports</a>
+    {% endif %}
+    <a href="{{ url_for('logout') }}">Log out ({{ session.username }})</a>
+  </nav>
+  <main>
+{% else %}
+<div class="auth">
+{% endif %}
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, text in messages %}
+      <div class="flash {{ category }}">{{ text }}</div>
+    {% endfor %}
+  {% endwith %}
+
+  {% block content %}{% endblock %}
+
+{% if session.user_id %}
+  </main>
+</div>
+{% else %}
+</div>
+{% endif %}
+
+</body>
+</html>

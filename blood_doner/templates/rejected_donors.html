@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Rejected donors{% endblock %}
+
+{% block content %}
+<h1>Rejected donors</h1>
+
+{% if rows %}
+<table>
+  <tr>
+    <th>Date</th>
+    <th>Donor</th>
+    <th>Group</th>
+    <th>Reason</th>
+  </tr>
+  {% for r in rows %}
+  <tr>
+    <td>{{ r.rejection_date or '-' }}</td>
+    <td>{{ r.name }}</td>
+    <td>{{ r.blood_group }}</td>
+    <td>{{ r.rejection_reason }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p class="empty">No rejected donors.</p>
+{% endif %}
+{% endblock %}

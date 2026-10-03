@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Follow-ups{% endblock %}
+
+{% block content %}
+<h1>Post-donation follow-ups</h1>
+
+<form method="post" class="card">
+  <label>Donor</label>
+  <select name="donor_id" required>
+    {% for d in donors %}
+    <option value="{{ d.id }}">{{ d.name }}</option>
+    {% endfor %}
+  </select>
+
+  <label>Follow-up date</label>
+  <input type="date" name="followup_date" required>
+
+  <label>Notes</label>
+  <textarea name="notes" rows="3"></textarea>
+
+  <button>Add follow-up</button>
+</form>
+
+<h2>History</h2>
+
+{% if rows %}
+<table>
+  <tr>
+    <th>Date</th>
+    <th>Donor</th>
+    <th>Notes</th>
+  </tr>
+  {% for r in rows %}
+  <tr>
+    <td>{{ r.followup_date }}</td>
+    <td>{{ r.name }}</td>
+    <td>{{ r.notes or '-' }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p class="empty">No follow-ups recorded yet.</p>
+{% endif %}
+{% endblock %}

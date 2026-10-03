@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Donation records{% endblock %}
+
+{% block content %}
+<h1>Donation records</h1>
+
+<form method="post" class="card">
+  <label>Donor (accepted donors only)</label>
+  <select name="donor_id" required>
+    {% for d in donors %}
+    <option value="{{ d.id }}">{{ d.name }} ({{ d.blood_group }})</option>
+    {% endfor %}
+  </select>
+
+  <label>Donation date</label>
+  <input type="date" name="donation_date" max="{{ today }}" required>
+
+  <label>Volume (ml)</label>
+  <input type="number" name="volume_ml" min="100" max="1000" value="450" required>
+
+  <label>Hemoglobin (g/dL, optional)</label>
+  <input type="number" step="0.1" name="hemoglobin_level">
+
+  <button>Add record</button>
+</form>
+
+<h2>History</h2>
+
+{% if rows %}
+<table>
+  <tr>
+    <th>Date</th>
+    <th>Donor</th>
+    <th>Group</th>
+    <th>Volume</th>
+    <th>Hb</th>
+    <th>Status</th>
+  </tr>
+  {% for r in rows %}
+  <tr>
+    <td>{{ r.donation_date }}</td>
+    <td>{{ r.name }}</td>
+    <td>{{ r.blood_group }}</td>
+    <td>{{ r.volume_ml }} ml</td>
+    <td>{{ r.hemoglobin_level or '-' }}</td>
+    <td class="{{ 'ok' if r.status == 'Completed' else 'bad' }}">{{ r.status }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p class="empty">No donations recorded yet.</p>
+{% endif %}
+{% endblock %}

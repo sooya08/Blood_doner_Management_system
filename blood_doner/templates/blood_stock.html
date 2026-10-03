@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Blood stock{% endblock %}
+
+{% block content %}
+<h1>Blood stock</h1>
+
+<table>
+  <tr>
+    <th>Blood group</th>
+    <th>Units available</th>
+  </tr>
+  {% for r in rows %}
+  <tr>
+    <td>{{ r.blood_group }}</td>
+    <td class="{{ 'bad' if r.units_available < 5 }}">
+      {{ r.units_available }}{{ ' (low)' if r.units_available < 5 }}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Donor approvals{% endblock %}
+
+{% block content %}
+<h1>Donor approvals</h1>
+
+<p>
+  {% for s in ['Pending', 'Accepted', 'Rejected'] %}
+  <a class="btn" style="{{ '' if s == status else 'background:#6b7280' }}"
+     href="{{ url_for('admin_donors', status=s) }}">{{ s }} ({{ counts.get(s, 0) }})</a>
+  {% endfor %}
+</p>
+
+{% if donors %}
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Group</th>
+    <th>Age</th>
+    <th>Phone</th>
+    <th>Decision</th>
+    <th>Delete</th>
+  </tr>
+  {% for d in donors %}
+  <tr>
+    <td>{{ d.name }}</td>
+    <td>{{ d.blood_group }}</td>
+    <td>{{ d.age }}</td>
+    <td>{{ d.phone }}</td>
+    <td>
+      <form method="post" action="{{ url_for('donor_status', donor_id=d.id) }}">
+        <input type="hidden" name="current" value="{{ status }}">
+        {% if status != 'Rejected' %}
+        <input name="reason" placeholder="Reason (if rejecting)">
+        {% endif %}
+        {% if status != 'Accepted' %}
+        <button name="action" value="accept">Accept</button>
+        {% endif %}
+        {% if status != 'Rejected' %}
+        <button name="action" value="reject">Reject</button>
+        {% endif %}
+      </form>
+    </td>
+    <td>
+      <form method="post" action="{{ url_for('delete_donor', donor_id=d.id) }}"
+            onsubmit="return confirm('Delete {{ d.name }} and all their records?')">
+        <input type="hidden" name="current" value="{{ status }}">
+        <button>Delete</button>
+      </form>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p class="empty">No {{ status|lower }} donors.</p>
+{% endif %}
+{% endblock %}

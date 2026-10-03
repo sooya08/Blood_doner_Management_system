@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Find donors{% endblock %}
+
+{% block content %}
+<h1>Find donors</h1>
+
+<form method="get" class="card">
+  <label>Blood group</label>
+  <select name="blood_group">
+    <option value="">Any</option>
+    {% for g in groups %}
+    <option {{ 'selected' if g == bg }}>{{ g }}</option>
+    {% endfor %}
+  </select>
+
+  <button>Search</button>
+</form>
+
+{% if donors %}
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Group</th>
+    <th>Age</th>
+    <th>Gender</th>
+    <th>Phone</th>
+    <th>Email</th>
+    <th>Last donation</th>
+    <th>Status</th>
+  </tr>
+  {% for d in donors %}
+  <tr>
+    <td>{{ d.name }}</td>
+    <td>{{ d.blood_group }}</td>
+    <td>{{ d.age }}</td>
+    <td>{{ d.gender }}</td>
+    <td>{{ d.phone }}</td>
+    <td>{{ d.email }}</td>
+    <td>{{ d.last_donation_date or '-' }}</td>
+    <td class="{{ 'ok' if d.status == 'Accepted' else 'bad' if d.status == 'Rejected' else 'empty' }}">{{ d.status }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p class="empty">No donors found.</p>
+{% endif %}
+{% endblock %}

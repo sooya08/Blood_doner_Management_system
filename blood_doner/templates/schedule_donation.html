@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Schedule donation{% endblock %}
+
+{% block content %}
+<h1>Schedule donation</h1>
+
+<form method="post" class="card">
+  <label>Donor</label>
+  <select name="donor_id" required>
+    {% for d in donors %}
+    <option value="{{ d.id }}">{{ d.name }} ({{ d.blood_group }})</option>
+    {% endfor %}
+  </select>
+
+  <label>Date</label>
+  <input type="date" name="scheduled_date" min="{{ today }}" required>
+
+  <button>Schedule donation</button>
+</form>
+
+<h2>Scheduled donations</h2>
+
+{% if rows %}
+<table>
+  <tr>
+    <th>Date</th>
+    <th>Donor</th>
+    <th>Group</th>
+    <th>Status</th>
+  </tr>
+  {% for r in rows %}
+  <tr>
+    <td>{{ r.scheduled_date }}</td>
+    <td>{{ r.name }}</td>
+    <td>{{ r.blood_group }}</td>
+    <td>{{ r.status }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p class="empty">No donations scheduled yet.</p>
+{% endif %}
+{% endblock %}

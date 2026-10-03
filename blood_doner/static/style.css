@@ -1,0 +1,1061 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,600;700&display=swap");
+
+/* ================================
+   Design tokens
+================================ */
+
+:root {
+  --red: #9b1c2e;
+  --red-dark: #71101f;
+  --red-light: #bd3449;
+  --red-soft: #f9e9ec;
+
+  --ink: #251c1d;
+  --mute: #756b6c;
+  --line: #e8e0de;
+  --bg: #f7f4f1;
+  --surface: #fffdfb;
+
+  --ok: #287653;
+  --ok-soft: #e5f5ed;
+  --bad: #b42318;
+  --bad-soft: #fce8e6;
+  --warning: #a56d18;
+
+  --shadow-sm: 0 4px 14px rgba(66, 35, 39, 0.06);
+  --shadow-md: 0 14px 36px rgba(66, 35, 39, 0.1);
+  --shadow-lg: 0 24px 60px rgba(66, 20, 27, 0.16);
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ================================
+   Base
+================================ */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  color: var(--ink);
+  background:
+    radial-gradient(
+      circle at 92% 8%,
+      rgba(155, 28, 46, 0.06),
+      transparent 25rem
+    ),
+    var(--bg);
+  font-family: "DM Sans", system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+a {
+  color: var(--red);
+  text-decoration: none;
+  transition:
+    color 180ms ease,
+    opacity 180ms ease;
+}
+
+a:hover {
+  color: var(--red-dark);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button,
+.btn {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid rgba(155, 28, 46, 0.18);
+  outline-offset: 2px;
+}
+
+::selection {
+  color: white;
+  background: var(--red);
+}
+
+/* ================================
+   Main application layout
+================================ */
+
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ================================
+   Sidebar navigation
+================================ */
+
+.layout > nav {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 20;
+  display: flex;
+  width: 245px;
+  height: 100vh;
+  flex-direction: column;
+  flex-shrink: 0;
+  overflow-y: auto;
+  padding: 28px 17px 20px;
+  color: white;
+  background: var(--red);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 10px 0 35px rgba(73, 8, 18, 0.08);
+  animation: sidebarEnter 650ms var(--ease-out) both;
+}
+
+/* Subtle animated texture */
+.layout > nav::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  content: "";
+  pointer-events: none;
+  opacity: 0.13;
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.8) 0.7px,
+    transparent 0.8px
+  );
+  background-size: 7px 7px;
+  mask-image: linear-gradient(to bottom, black, transparent 85%);
+}
+
+.layout > nav b {
+  position: relative;
+  display: block;
+  margin-bottom: 25px;
+  padding: 9px 12px 18px 52px;
+  color: white;
+  font-family: "Newsreader", Georgia, serif;
+  font-size: 21px;
+  line-height: 1.15;
+  letter-spacing: -0.35px;
+}
+
+/* Animated blood-drop logo */
+.layout > nav b::before {
+  position: absolute;
+  top: 0;
+  left: 5px;
+  display: grid;
+  width: 37px;
+  height: 37px;
+  place-items: center;
+  content: "♥";
+  color: var(--red);
+  background: #fff8f7;
+  border-radius: 11px 11px 15px 11px;
+  box-shadow: 0 9px 25px rgba(62, 0, 10, 0.24);
+  transform: rotate(3deg);
+  animation: logoFloat 4s ease-in-out infinite;
+}
+
+.layout > nav a {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 42px;
+  margin-bottom: 4px;
+  padding: 10px 13px;
+  overflow: hidden;
+  color: rgba(255, 244, 246, 0.72);
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 500;
+  transition:
+    color 180ms ease,
+    background 180ms ease,
+    transform 180ms ease;
+  animation: navItemEnter 500ms var(--ease-out) both;
+}
+
+/* Staggered sidebar entrance */
+.layout > nav a:nth-of-type(1) {
+  animation-delay: 70ms;
+}
+
+.layout > nav a:nth-of-type(2) {
+  animation-delay: 100ms;
+}
+
+.layout > nav a:nth-of-type(3) {
+  animation-delay: 130ms;
+}
+
+.layout > nav a:nth-of-type(4) {
+  animation-delay: 160ms;
+}
+
+.layout > nav a:nth-of-type(5) {
+  animation-delay: 190ms;
+}
+
+.layout > nav a:nth-of-type(6) {
+  animation-delay: 220ms;
+}
+
+.layout > nav a:nth-of-type(7) {
+  animation-delay: 250ms;
+}
+
+.layout > nav a:nth-of-type(8) {
+  animation-delay: 280ms;
+}
+
+.layout > nav a:nth-of-type(9) {
+  animation-delay: 310ms;
+}
+
+.layout > nav a:nth-of-type(10) {
+  animation-delay: 340ms;
+}
+
+.layout > nav a:nth-of-type(11) {
+  animation-delay: 370ms;
+}
+
+.layout > nav a:nth-of-type(12) {
+  animation-delay: 400ms;
+}
+
+.layout > nav a::before {
+  width: 0;
+  height: 6px;
+  margin-right: 0;
+  content: "";
+  background: white;
+  border-radius: 50%;
+  opacity: 0;
+  transition:
+    width 180ms ease,
+    margin 180ms ease,
+    opacity 180ms ease;
+}
+
+.layout > nav a:hover,
+.layout > nav a:focus-visible {
+  color: white;
+  background: rgba(255, 255, 255, 0.11);
+  transform: translateX(3px);
+}
+
+.layout > nav a:hover::before {
+  width: 6px;
+  margin-right: 9px;
+  opacity: 1;
+}
+
+/* Logout link */
+.layout > nav a:last-child {
+  margin-top: auto;
+  color: rgba(255, 244, 246, 0.65);
+  border-top: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 0 0 10px 10px;
+}
+
+/* ================================
+   Main content
+================================ */
+
+main {
+  width: calc(100% - 245px);
+  max-width: 1300px;
+  min-height: 100vh;
+  margin-left: 245px;
+  padding: 42px clamp(28px, 5vw, 72px);
+}
+
+main > * {
+  animation: contentEnter 650ms var(--ease-out) both;
+}
+
+main > *:nth-child(1) {
+  animation-delay: 60ms;
+}
+
+main > *:nth-child(2) {
+  animation-delay: 120ms;
+}
+
+main > *:nth-child(3) {
+  animation-delay: 180ms;
+}
+
+main > *:nth-child(4) {
+  animation-delay: 240ms;
+}
+
+main > *:nth-child(5) {
+  animation-delay: 300ms;
+}
+
+main > *:nth-child(6) {
+  animation-delay: 360ms;
+}
+
+h1,
+h2 {
+  color: var(--ink);
+}
+
+h1 {
+  position: relative;
+  margin: 0 0 25px;
+  padding-bottom: 14px;
+  font-family: "Newsreader", Georgia, serif;
+  font-size: clamp(30px, 4vw, 42px);
+  line-height: 1.05;
+  letter-spacing: -1px;
+}
+
+h1::after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 46px;
+  height: 4px;
+  content: "";
+  background: var(--red);
+  border-radius: 50px;
+  transform-origin: left;
+  animation: lineGrow 750ms 300ms var(--ease-out) both;
+}
+
+h2 {
+  margin: 32px 0 14px;
+  font-family: "Newsreader", Georgia, serif;
+  font-size: 22px;
+  letter-spacing: -0.25px;
+}
+
+/* ================================
+   Dashboard statistics
+================================ */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 34px;
+}
+
+.stat {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  padding: 23px;
+  color: var(--mute);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  box-shadow: var(--shadow-sm);
+  font-size: 12px;
+  font-weight: 600;
+  transition:
+    transform 260ms var(--ease-out),
+    border-color 260ms ease,
+    box-shadow 260ms ease;
+}
+
+.stat::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  content: "";
+  background: var(--red);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 300ms var(--ease-out);
+}
+
+.stat::after {
+  position: absolute;
+  top: -32px;
+  right: -32px;
+  width: 92px;
+  height: 92px;
+  content: "";
+  background: var(--red-soft);
+  border-radius: 50%;
+  transition: transform 350ms var(--ease-out);
+}
+
+.stat:hover {
+  border-color: #d9c9c8;
+  box-shadow: var(--shadow-md);
+  transform: translateY(-6px);
+}
+
+.stat:hover::before {
+  transform: scaleY(1);
+}
+
+.stat:hover::after {
+  transform: scale(1.2);
+}
+
+.stat span {
+  position: relative;
+  z-index: 1;
+  display: block;
+  margin-bottom: 4px;
+  color: var(--ink);
+  font-family: "Newsreader", Georgia, serif;
+  font-size: 35px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -1px;
+}
+
+/* ================================
+   Forms and cards
+================================ */
+
+.card {
+  width: 100%;
+  max-width: 680px;
+  padding: 28px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: var(--shadow-sm);
+  transition:
+    box-shadow 260ms ease,
+    transform 260ms var(--ease-out);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.card label {
+  display: block;
+  margin: 16px 0 7px;
+  color: #514748;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.15px;
+}
+
+.card label:first-child {
+  margin-top: 0;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 12px 13px;
+  color: var(--ink);
+  background: #fcfaf8;
+  border: 1px solid #ddd5d2;
+  border-radius: 9px;
+  outline: none;
+  transition:
+    background 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+input:hover,
+select:hover,
+textarea:hover {
+  border-color: #cbbdbc;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  background: white;
+  border-color: rgba(155, 28, 46, 0.55);
+  box-shadow: 0 0 0 4px rgba(155, 28, 46, 0.08);
+  transform: translateY(-1px);
+}
+
+textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #aaa0a0;
+}
+
+.card button,
+main > form button,
+td button,
+.btn {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  padding: 10px 18px;
+  color: white;
+  background: var(--red);
+  border: 0;
+  border-radius: 9px;
+  box-shadow: 0 7px 18px rgba(155, 28, 46, 0.17);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  transition:
+    background 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.card button:hover,
+main > form button:hover,
+td button:hover,
+.btn:hover {
+  color: white;
+  background: var(--red-dark);
+  box-shadow: 0 11px 24px rgba(155, 28, 46, 0.25);
+  transform: translateY(-2px);
+}
+
+.card button:active,
+main > form button:active,
+td button:active,
+.btn:active {
+  box-shadow: 0 4px 10px rgba(155, 28, 46, 0.15);
+  transform: translateY(0) scale(0.98);
+}
+
+/* Buttons and forms inside tables */
+td form {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+td form input:not([type="hidden"]) {
+  min-width: 150px;
+  flex: 1;
+}
+
+td form button {
+  min-height: 33px;
+  margin: 0;
+  padding: 7px 11px;
+  font-size: 10px;
+}
+
+/* ================================
+   Tables
+================================ */
+
+table {
+  display: table;
+  width: 100%;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 14px;
+  box-shadow: var(--shadow-sm);
+}
+
+th,
+td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #eee8e5;
+  text-align: left;
+  vertical-align: middle;
+}
+
+th {
+  color: #716667;
+  background: #f7f3f0;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.75px;
+  text-transform: uppercase;
+}
+
+td {
+  font-size: 12.5px;
+  transition:
+    color 180ms ease,
+    background 180ms ease,
+    padding 180ms ease;
+}
+
+tr:last-child td {
+  border-bottom: 0;
+}
+
+tr {
+  transition:
+    background 180ms ease,
+    transform 180ms ease;
+}
+
+tr:not(:first-child):hover td {
+  background: #fdf7f7;
+}
+
+tr:not(:first-child):hover td:first-child {
+  padding-left: 20px;
+  color: var(--red);
+}
+
+/* ================================
+   Status messages
+================================ */
+
+.ok {
+  color: var(--ok);
+  font-weight: 700;
+}
+
+.bad {
+  color: var(--bad);
+  font-weight: 700;
+}
+
+h2.ok,
+h2.bad {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  animation: statusPop 500ms var(--ease-out) both;
+}
+
+h2.ok {
+  background: var(--ok-soft);
+}
+
+h2.bad {
+  background: var(--bad-soft);
+}
+
+h2.ok::before,
+h2.bad::before {
+  width: 9px;
+  height: 9px;
+  content: "";
+  background: currentColor;
+  border-radius: 50%;
+  animation: statusPulse 1.8s ease-in-out infinite;
+}
+
+.empty {
+  padding: 17px 19px;
+  color: var(--mute);
+  background: #f1edeb;
+  border: 1px dashed #d8cecb;
+  border-radius: 10px;
+  font-size: 13px;
+}
+
+.flash {
+  position: relative;
+  margin: 0 0 20px;
+  padding: 13px 17px 13px 43px;
+  overflow: hidden;
+  color: #574748;
+  background: #fff3dc;
+  border: 1px solid #eed8ad;
+  border-radius: 11px;
+  box-shadow: var(--shadow-sm);
+  font-size: 12px;
+  font-weight: 600;
+  animation: flashEnter 500ms var(--ease-out) both;
+}
+
+.flash::before {
+  position: absolute;
+  top: 50%;
+  left: 17px;
+  width: 10px;
+  height: 10px;
+  content: "";
+  background: var(--warning);
+  border-radius: 50%;
+  transform: translateY(-50%);
+  animation: statusPulse 2s ease-in-out infinite;
+}
+
+.flash.success {
+  color: #235d46;
+  background: var(--ok-soft);
+  border-color: #bbdfce;
+}
+
+.flash.success::before {
+  background: var(--ok);
+}
+
+.flash.error,
+.flash.danger {
+  color: #8d251e;
+  background: var(--bad-soft);
+  border-color: #f0c4c0;
+}
+
+.flash.error::before,
+.flash.danger::before {
+  background: var(--bad);
+}
+
+/* ================================
+   Login and registration pages
+================================ */
+
+.auth {
+  display: grid;
+  width: 100%;
+  min-height: 100vh;
+  padding: 35px 20px;
+  place-content: center;
+  background:
+    radial-gradient(
+      circle at 15% 20%,
+      rgba(155, 28, 46, 0.1),
+      transparent 28rem
+    ),
+    radial-gradient(
+      circle at 90% 85%,
+      rgba(155, 28, 46, 0.07),
+      transparent 25rem
+    ),
+    var(--bg);
+}
+
+.auth::before {
+  position: fixed;
+  top: -70px;
+  right: -70px;
+  width: 230px;
+  height: 230px;
+  content: "";
+  pointer-events: none;
+  background: var(--red);
+  border-radius: 55% 45% 55% 35%;
+  opacity: 0.07;
+  animation: backgroundFloat 9s ease-in-out infinite;
+}
+
+.auth > h1,
+.auth > .card,
+.auth > p,
+.auth > .flash {
+  width: min(100%, 440px);
+}
+
+.auth > h1 {
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+  animation: contentEnter 600ms var(--ease-out) both;
+}
+
+.auth > h1::after {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.auth > .card {
+  margin: 0 auto;
+  box-shadow: var(--shadow-lg);
+  animation: cardEnter 700ms 100ms var(--ease-out) both;
+}
+
+.auth > p {
+  margin: 20px auto 0;
+  color: var(--mute);
+  font-size: 13px;
+  text-align: center;
+  animation: contentEnter 600ms 220ms var(--ease-out) both;
+}
+
+.auth > .flash {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+/* ================================
+   Animations
+================================ */
+
+@keyframes sidebarEnter {
+  from {
+    opacity: 0;
+    transform: translateX(-35px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes navItemEnter {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes contentEnter {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cardEnter {
+  from {
+    opacity: 0;
+    transform: translateY(22px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes flashEnter {
+  from {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes statusPop {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes lineGrow {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes logoFloat {
+  0%,
+  100% {
+    transform: translateY(0) rotate(3deg);
+  }
+
+  50% {
+    transform: translateY(-5px) rotate(-3deg);
+  }
+}
+
+@keyframes backgroundFloat {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0);
+  }
+
+  50% {
+    transform: translate(-20px, 20px) rotate(15deg);
+  }
+}
+
+@keyframes statusPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 currentColor;
+    opacity: 1;
+  }
+
+  50% {
+    box-shadow: 0 0 0 7px transparent;
+    opacity: 0.65;
+  }
+}
+
+/* ================================
+   Responsive design
+================================ */
+
+@media (max-width: 900px) {
+  .layout {
+    display: block;
+  }
+
+  .layout > nav {
+    position: relative;
+    width: 100%;
+    height: auto;
+    max-height: none;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+    overflow-x: auto;
+    padding: 13px 16px;
+    box-shadow: 0 8px 25px rgba(73, 8, 18, 0.12);
+  }
+
+  .layout > nav::before {
+    display: none;
+  }
+
+  .layout > nav b {
+    min-width: max-content;
+    margin: 0 12px 0 0;
+    padding: 8px 12px 8px 43px;
+    font-size: 17px;
+  }
+
+  .layout > nav b::before {
+    top: 3px;
+    width: 32px;
+    height: 32px;
+  }
+
+  .layout > nav a {
+    min-width: max-content;
+    min-height: 38px;
+    margin: 0;
+    padding: 9px 12px;
+  }
+
+  .layout > nav a:last-child {
+    margin: 0;
+    border: 0;
+    border-radius: 10px;
+  }
+
+  main {
+    width: 100%;
+    margin-left: 0;
+    padding: 32px 22px 45px;
+  }
+
+  .stats {
+    grid-template-columns: repeat(2, minmax(160px, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  body {
+    font-size: 14px;
+  }
+
+  main {
+    padding: 27px 15px 40px;
+  }
+
+  h1 {
+    font-size: 31px;
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
+  }
+
+  .stat {
+    padding: 19px;
+  }
+
+  .card {
+    padding: 21px 17px;
+    border-radius: 13px;
+  }
+
+  /* Makes large tables scroll horizontally on phones */
+  table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  th,
+  td {
+    padding: 12px 13px;
+  }
+
+  td form {
+    min-width: 230px;
+  }
+
+  .auth {
+    padding: 25px 14px;
+  }
+}
+
+/* ================================
+   Accessibility
+================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Compatibility{% endblock %}
+
+{% block content %}
+<h1>Blood compatibility</h1>
+
+<form method="post" class="card">
+  <label>Donor blood group</label>
+  <select name="donor_bg">
+    {% for g in groups %}
+    <option {{ 'selected' if g == d }}>{{ g }}</option>
+    {% endfor %}
+  </select>
+
+  <label>Recipient blood group</label>
+  <select name="recipient_bg">
+    {% for g in groups %}
+    <option {{ 'selected' if g == r }}>{{ g }}</option>
+    {% endfor %}
+  </select>
+
+  <button>Check</button>
+</form>
+
+{% if ok is not none %}
+<h2 class="{{ 'ok' if ok else 'bad' }}">
+  {{ d }} to {{ r }}: {{ 'compatible' if ok else 'not compatible' }}
+</h2>
+{% endif %}
+{% endblock %}
